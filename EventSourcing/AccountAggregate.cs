@@ -76,8 +76,18 @@ private void Apply(DepositEvent deposit)
 
   private void Apply(WithdrawalEvent wihdrawal)
   {
-   Balance -= wihdrawal.amount;
+    if (AccountId == null)
+    { 
+      throw new Exception("128*");
+    }
+    if (Balance - wihdrawal.amount< 0)
+    {
+      throw new Exception("285*");
+    }
+    Balance -= wihdrawal.amount;
+
   }
+  
 
 
   private void Apply(DeactivationEvent deactivation)
