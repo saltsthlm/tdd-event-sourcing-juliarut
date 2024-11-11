@@ -56,7 +56,11 @@ public class AccountAggregate
   }
 
   private void Apply(DepositEvent deposit)
-  {
+  { 
+    if (AccountId == null)
+    {
+        throw new Exception("128*");
+    }
     Balance += deposit.Amount;
   }
 
