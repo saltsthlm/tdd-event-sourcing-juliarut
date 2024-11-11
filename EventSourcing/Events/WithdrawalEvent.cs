@@ -13,4 +13,6 @@ public record WithdrawalEvent : Event
 
   [JsonPropertyName("currency")]
   public required CurrencyType Currency { get; init; }
+
+  
 }

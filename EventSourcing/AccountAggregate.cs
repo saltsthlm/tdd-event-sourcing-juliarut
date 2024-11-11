@@ -1,4 +1,5 @@
-﻿using EventSourcing.Events;
+﻿using System.Numerics;
+using EventSourcing.Events;
 using EventSourcing.Exceptions;
 using EventSourcing.Models;
 
@@ -42,6 +43,9 @@ public class AccountAggregate
       case DepositEvent deposit:
         Apply(deposit);
         break;
+      case WithdrawalEvent withdrawal:
+        Apply(withdrawal);
+        break;
       default:
         throw new EventTypeNotSupportedException("162 ERROR_EVENT_NOT_SUPPORTED");
     }
@@ -55,15 +59,36 @@ public class AccountAggregate
     CustomerId = accountCreated.CustomerId;
   }
 
-  private void Apply(DepositEvent deposit)
-  {
+
+private void Apply(DepositEvent deposit)
+{ 
+    if (AccountId == null)
+    {
+        throw new Exception("128*");
+    }
+
+    if (Balance < deposit.Amount)
+    {
+        throw new Exception("281*");
+    }
     Balance += deposit.Amount;
-  }
+}
 
   private void Apply(WithdrawalEvent wihdrawal)
   {
-    throw new NotImplementedException();
+    if (AccountId == null)
+    { 
+      throw new Exception("128*");
+    }
+    if (Balance - wihdrawal.amount< 0)
+    {
+      throw new Exception("285*");
+    }
+    Balance -= wihdrawal.amount;
+
   }
+  
+
 
   private void Apply(DeactivationEvent deactivation)
   {
